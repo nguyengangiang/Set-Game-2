@@ -27,8 +27,8 @@ class SetGameVM {
         model.deselect(card: card)
     }
     
-    func dealCards(amount: Int = 3) {
-        model.dealCards(amount: amount)
+    func dealCards() {
+        model.dealCards(amount: 3)
     }
     
     // MARK: Access to Model
@@ -37,6 +37,12 @@ class SetGameVM {
     }
     
     var cardOnScreen: Array<SetGameModel.Card> {
+        print("cards on screen: \(model.cards.filter{$0.isDealt && !$0.isMatched})")
         return model.cards.filter{$0.isDealt && !$0.isMatched}
+    }
+    
+    var cardsDeal: Array<SetGameModel.Card> {
+        print("cards dealt: \(model.cards.filter{$0.isDealt})")
+        return model.cards.filter{$0.isDealt}
     }
 }

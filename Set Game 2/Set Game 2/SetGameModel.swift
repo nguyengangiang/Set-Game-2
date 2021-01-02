@@ -27,7 +27,7 @@ struct SetGameModel {
         }
         cards.shuffle()
         for i in 0 ..< numberOfCardsDealed {
-            cards[i].isDealt = false
+            cards[i].isDealt = true
         }
     }
     
@@ -55,7 +55,7 @@ struct SetGameModel {
         case open = 3
     }
     
-    enum Shape: Int, CaseIterable {
+    enum Shape: Int, CaseIterable {        
         case diamond = 1
         case rect = 2
         case circle = 3
