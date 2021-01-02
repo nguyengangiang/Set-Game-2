@@ -8,14 +8,9 @@
 import SwiftUI
 
 struct ContentView: View {
+    var viewModel: SetGameVM
     var body: some View {
-        Text("Hello, world!")
-            .padding()
+        Button("New Game", action: viewModel.resetGame)
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
-    }
-}
