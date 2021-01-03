@@ -17,8 +17,8 @@ struct SetGameModel {
         for color in Color.allCases {
             for shading in Shading.allCases {
                 for number in 1...3 {
-                    for shape in Shape.allCases {
-                        let card = Card(color: color, shading: shading, numberOfShapes: number, shape: shape, id: id)
+                    for symbol in Symbol.allCases {
+                        let card = Card(color: color, shading: shading, numberOfShapes: number, symbol: symbol, id: id)
                         id += 1
                         cards.append(card)
                     }
@@ -35,7 +35,7 @@ struct SetGameModel {
         var color: Color
         var shading: Shading
         var numberOfShapes: Int
-        var shape: Shape
+        var symbol: Symbol
         var id: Int
         
         var isMatched: Bool = false
@@ -55,7 +55,7 @@ struct SetGameModel {
         case open = 3
     }
     
-    enum Shape: Int, CaseIterable {        
+    enum Symbol: Int, CaseIterable {
         case diamond = 1
         case rect = 2
         case circle = 3
@@ -77,7 +77,7 @@ struct SetGameModel {
         if (card1.numberOfShapes + card2.numberOfShapes + card3.numberOfShapes) % 3 != 0 {
             return false
         }
-        if (card1.shape.rawValue + card2.shape.rawValue + card3.shape.rawValue) % 3 != 0 {
+        if (card1.symbol.rawValue + card2.symbol.rawValue + card3.symbol.rawValue) % 3 != 0 {
             return false
         }
         if (card1.color.rawValue + card2.color.rawValue + card3.color.rawValue) % 3 != 0 {

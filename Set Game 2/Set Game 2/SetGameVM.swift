@@ -7,8 +7,8 @@
 
 import Foundation
 
-class SetGameVM {
-    private var model: SetGameModel = newGame(numberOfCardsDealt: 12)
+class SetGameVM: ObservableObject {
+    @Published private var model: SetGameModel = newGame(numberOfCardsDealt: 12)
     
     static func newGame(numberOfCardsDealt: Int) -> SetGameModel{
         SetGameModel(numberOfCardsDealed: 12)
@@ -21,6 +21,7 @@ class SetGameVM {
     
     func select(card: SetGameModel.Card) {
         model.select(card: card)
+        print(card.numberOfShapes)
     }
     
     func deselect(card: SetGameModel.Card) {
@@ -37,12 +38,10 @@ class SetGameVM {
     }
     
     var cardOnScreen: Array<SetGameModel.Card> {
-        print("cards on screen: \(model.cards.filter{$0.isDealt && !$0.isMatched})")
         return model.cards.filter{$0.isDealt && !$0.isMatched}
     }
     
     var cardsDeal: Array<SetGameModel.Card> {
-        print("cards dealt: \(model.cards.filter{$0.isDealt})")
         return model.cards.filter{$0.isDealt}
     }
 }
