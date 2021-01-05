@@ -10,11 +10,23 @@ import SwiftUI
 struct ContentView: View {
     @ObservedObject var viewModel: SetGameVM
     var body: some View {
-        Button("New Game", action: viewModel.resetGame)
-        Button("Deal cards", action: viewModel.dealCards)
-        Grid(items: viewModel.cardsDeal) { card in
-            CardView(card: card).onTapGesture{card.isSelected ? viewModel.deselect(card: card) : viewModel.select(card: card)}
+        GeometryReader { geometry in
+            VStack {
+                Button("New Game") {withAnimation(.easeInOut) {viewModel.resetGame()}}.transition(.offset(x: 10, y: 10)).onAppear()
+                Grid(items: viewModel.cardsDeal) {card in
+                    CardView(card: card).onTapGesture{withAnimation(.easeInOut) {card.isSelected ? viewModel.deselect(card: card) : viewModel.select(card: card)}}
+                        .transition(.slide)
+                }
+                .layoutPriority(1)
+                CardView(card: SetGameModel.Card(color: .blue, shading: .solid, numberOfShapes: 3, symbol: .circle, id: 100)).foregroundColor(.red).onTapGesture { withAnimation(.easeInOut) {
+                    viewModel.dealCards()
+                    }
+                }
+                .transition(.offset())
+                //.position(x: geometry.size.width / 2, y: geometry.size.height / 6)
+            }
         }
+
     }
 }
 
@@ -31,7 +43,7 @@ struct CardView: View {
         }
         .padding()
         .cardify(isFaceUp: card.isDealt, isSelected: card.isSelected)
-        .padding()
+        .padding(5)
         .foregroundColor(color)
         .aspectRatio(2/3, contentMode: .fit)
 
@@ -54,7 +66,6 @@ struct CardView: View {
             .aspectRatio(16/9, contentMode: .fit)
             .frame(width: size.width, height: size.height, alignment: .center)
         }
-
     }
     
     var color: Color {
@@ -77,3 +88,8 @@ struct CardView: View {
     }
 }
 
+struct ContentView_Preview: PreviewProvider {
+    static var previews: some View {
+        ContentView(viewModel: SetGameVM())
+    }
+}

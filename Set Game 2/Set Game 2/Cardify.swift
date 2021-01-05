@@ -31,9 +31,10 @@ struct Cardify: AnimatableModifier {
             Group{
                 RoundedRectangle(cornerRadius: cornerRadius).stroke(lineWidth: lineWidth)
                 RoundedRectangle(cornerRadius: cornerRadius).fill(Color.white)
+                RoundedRectangle(cornerRadius: cornerRadius).foregroundColor(Color.purple).opacity(isSelected ? 0.2 : 0)
                 content
             }.opacity(isFaceUp ? 1 : 0)
-            RoundedRectangle(cornerRadius: cornerRadius).foregroundColor(Color.purple).opacity(isSelected ? 0.2 : 0)
+            RoundedRectangle(cornerRadius: cornerRadius).opacity(isFaceUp ? 0 : 1)
             }
         .rotation3DEffect(Angle.degrees(rotation), axis: (0, 1, 0))
     }

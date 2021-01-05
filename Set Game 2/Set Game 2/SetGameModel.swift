@@ -69,8 +69,8 @@ struct SetGameModel {
         indicesOfChosenCard.append(index)
         if indicesOfChosenCard.count == 3 {
             if check() {
-                for index in 0..<3 {
-                    cards[indicesOfChosenCard[index]].isMatched = true
+                for i in 0..<3 {
+                    cards[indicesOfChosenCard[i]].isMatched = true
                     }
                 cards.removeAll { cardIndex in
                     cardIndex.isMatched
@@ -78,11 +78,12 @@ struct SetGameModel {
                 indicesOfChosenCard.removeAll()
                 dealCards()
             } else {
-                for index in 0..<3 {
-                    let cardIndex = indicesOfChosenCard[index]
+                while (!indicesOfChosenCard.isEmpty) {
+                    print("\(indicesOfChosenCard.count)")
+                    let cardIndex = indicesOfChosenCard[0]
                     deselect(card: cards[cardIndex])
-                    indicesOfChosenCard.remove(at: index)
                 }
+                indicesOfChosenCard.removeAll()
             }
         }
     }

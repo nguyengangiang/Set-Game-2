@@ -1,6 +1,6 @@
 //
 //  Grid.swift
-//  Memorize
+//  Set Game
 //
 //  Created by Giang Nguyenn on 12/28/20.
 //
