@@ -25,34 +25,36 @@ struct CardView: View {
         VStack {
             ForEach(0 ..< card.numberOfShapes) { shape in
                 GeometryReader { geometry in
-                    ZStack {
-                        Group {
-                            if card.symbol.rawValue == 1 {
-                                Diamond().stroke(lineWidth: 2)
-                                Diamond().fill().opacity(shading)
-                            } else if card.symbol.rawValue == 2 {
-                                Capsule().stroke(lineWidth: 2)
-                                Capsule().fill().opacity(shading)
-                            } else {
-                                Rectangle().stroke(lineWidth: 2)
-                                Rectangle().fill().opacity(shading)
-                            }
-                        }
-                        .aspectRatio(16/9, contentMode: .fit)
-                        .padding(CGFloat(20 / card.numberOfShapes))
-                    }
-                    .frame(width: geometry.size.width,
-                           height: geometry.size.height / CGFloat(card.numberOfShapes),
-                           alignment: .center)
-                    .position(x: geometry.size.width / 2,
-                              y: geometry.size.height * CGFloat(shape) / (CGFloat(card.numberOfShapes)) + geometry.size.height / CGFloat(2 * card.numberOfShapes))
+                    body(for: geometry.size)
                 }
             }
-            .cardify(isFaceUp: card.isDealt)
-            .padding()
-            .foregroundColor(color)
-
         }
+        .padding()
+        .cardify(isFaceUp: card.isDealt, isSelected: card.isSelected)
+        .padding()
+        .foregroundColor(color)
+        .aspectRatio(2/3, contentMode: .fit)
+
+    }
+    
+    func body(for size: CGSize) -> some View {
+        ZStack {
+            Group {
+                if card.symbol.rawValue == 1 {
+                    Diamond().stroke(lineWidth: 2)
+                    Diamond().fill().opacity(shading)
+                } else if card.symbol.rawValue == 2 {
+                    Capsule().stroke(lineWidth: 2)
+                    Capsule().fill().opacity(shading)
+                } else {
+                    Rectangle().stroke(lineWidth: 2)
+                    Rectangle().fill().opacity(shading)
+                }
+            }
+            .aspectRatio(16/9, contentMode: .fit)
+            .frame(width: size.width, height: size.height, alignment: .center)
+        }
+
     }
     
     var color: Color {

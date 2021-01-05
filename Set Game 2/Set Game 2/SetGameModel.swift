@@ -18,7 +18,7 @@ struct SetGameModel {
             for shading in Shading.allCases {
                 for number in 1...3 {
                     for symbol in Symbol.allCases {
-                        let card = Card(color: color, shading: shading, numberOfShapes: number, symbol: symbol, id: id)
+                        let card = Card(color: color, shading: shading, numberOfShapes: number, symbol: symbol, id: id, isMatched: false, isSelected: false, isDealt: false)
                         id += 1
                         cards.append(card)
                     }
@@ -62,17 +62,36 @@ struct SetGameModel {
     }
     
     mutating func select(card: Card) {
+        print("selected card: \(card)")
         assert(card.isDealt && !card.isMatched && !card.isSelected)
         let index = cards.firstIndex(matching: card)!
         cards[index].isSelected = true
         indicesOfChosenCard.append(index)
+        if indicesOfChosenCard.count == 3 {
+            if check() {
+                for index in 0..<3 {
+                    cards[indicesOfChosenCard[index]].isMatched = true
+                    }
+                cards.removeAll { cardIndex in
+                    cardIndex.isMatched
+                }
+                indicesOfChosenCard.removeAll()
+                dealCards()
+            } else {
+                for index in 0..<3 {
+                    let cardIndex = indicesOfChosenCard[index]
+                    deselect(card: cards[cardIndex])
+                    indicesOfChosenCard.remove(at: index)
+                }
+            }
+        }
     }
     
     private func check() -> Bool {
         assert(indicesOfChosenCard.count == 3)
-        let card1 = cards[indicesOfChosenCard[1]]
-        let card2 = cards[indicesOfChosenCard[2]]
-        let card3 = cards[indicesOfChosenCard[3]]
+        let card1 = cards[indicesOfChosenCard[0]]
+        let card2 = cards[indicesOfChosenCard[1]]
+        let card3 = cards[indicesOfChosenCard[2]]
         
         if (card1.numberOfShapes + card2.numberOfShapes + card3.numberOfShapes) % 3 != 0 {
             return false
@@ -99,7 +118,7 @@ struct SetGameModel {
     }
     
     mutating func deselect(card: Card) {
-        assert(card.isDealt && !card.isMatched && card.isSelected && indicesOfChosenCard.count < 3)
+        assert(card.isDealt && !card.isMatched && card.isSelected && indicesOfChosenCard.count < 4)
         let index = cards.firstIndex(matching: card)!
         cards[index].isSelected = false
         indicesOfChosenCard = indicesOfChosenCard.filter{$0 != index}

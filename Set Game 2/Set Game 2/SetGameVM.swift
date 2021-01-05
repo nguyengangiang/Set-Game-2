@@ -16,12 +16,12 @@ class SetGameVM: ObservableObject {
     
     // MARK: Intents
     func resetGame() {
+        model.cards.removeAll()
         model = SetGameVM.newGame(numberOfCardsDealt: 12)
     }
     
     func select(card: SetGameModel.Card) {
         model.select(card: card)
-        print(card.numberOfShapes)
     }
     
     func deselect(card: SetGameModel.Card) {

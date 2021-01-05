@@ -14,13 +14,16 @@ struct Cardify: AnimatableModifier {
         rotation < 90
     }
     
+    var isSelected: Bool
+    
     var animatableData: Double {
         get {return rotation}
         set {rotation = newValue}
     }
     
-    init(isFaceUp: Bool) {
+    init(isFaceUp: Bool, isSelected: Bool) {
         rotation = isFaceUp ? 0 : 180
+        self.isSelected = isSelected
     }
     
     func body(content: Content) -> some View {
@@ -30,7 +33,7 @@ struct Cardify: AnimatableModifier {
                 RoundedRectangle(cornerRadius: cornerRadius).fill(Color.white)
                 content
             }.opacity(isFaceUp ? 1 : 0)
-            RoundedRectangle(cornerRadius: cornerRadius).fill().opacity(isFaceUp ? 0 : 1)
+            RoundedRectangle(cornerRadius: cornerRadius).foregroundColor(Color.purple).opacity(isSelected ? 0.2 : 0)
             }
         .rotation3DEffect(Angle.degrees(rotation), axis: (0, 1, 0))
     }
@@ -39,7 +42,7 @@ struct Cardify: AnimatableModifier {
 }
 
 extension View {
-    func cardify(isFaceUp: Bool) -> some View {
-        modifier(Cardify(isFaceUp: isFaceUp))
+    func cardify(isFaceUp: Bool, isSelected: Bool) -> some View {
+        modifier(Cardify(isFaceUp: isFaceUp, isSelected: isSelected))
     }
 }
