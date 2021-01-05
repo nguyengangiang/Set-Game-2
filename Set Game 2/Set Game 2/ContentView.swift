@@ -10,23 +10,23 @@ import SwiftUI
 struct ContentView: View {
     @ObservedObject var viewModel: SetGameVM
     var body: some View {
-        GeometryReader { geometry in
-            VStack {
-                Button("New Game") {withAnimation(.easeInOut) {viewModel.resetGame()}}.transition(.offset(x: 10, y: 10)).onAppear()
-                Grid(items: viewModel.cardsDeal) {card in
-                    CardView(card: card).onTapGesture{withAnimation(.easeInOut) {card.isSelected ? viewModel.deselect(card: card) : viewModel.select(card: card)}}
-                        .transition(.slide)
-                }
-                .layoutPriority(1)
-                CardView(card: SetGameModel.Card(color: .blue, shading: .solid, numberOfShapes: 3, symbol: .circle, id: 100)).foregroundColor(.red).onTapGesture { withAnimation(.easeInOut) {
-                    viewModel.dealCards()
-                    }
-                }
-                .transition(.offset())
-                //.position(x: geometry.size.width / 2, y: geometry.size.height / 6)
+        VStack {
+            Button("New Game") { withAnimation(.easeInOut) {
+                viewModel.resetGame()}}.transition(.offset())
+            Grid(items: viewModel.cardsDeal) { card in
+                CardView(card: card).onTapGesture{ withAnimation(.easeInOut) {card.isSelected ? viewModel.deselect(card: card) : viewModel.select(card: card)}}
+                    .transition(.slide)
             }
+            .layoutPriority(1)
+            CardView(card: SetGameModel.Card(color: .blue, shading: .solid, numberOfShapes: 3, symbol: .circle, id: 100)).foregroundColor(.red).onTapGesture { withAnimation(.easeInOut) {
+                viewModel.dealCards()
+                }
+            }
+            .transition(.offset(x: 100, y: -100))
         }
-
+        .onAppear { withAnimation(.linear(duration: 1)) {
+            viewModel.resetGame()}
+        }.transition(.offset(x: CGFloat(Int.random(in: 10...150)), y: CGFloat(Int.random(in: 10...150))))
     }
 }
 
