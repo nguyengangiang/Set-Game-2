@@ -20,35 +20,38 @@ struct ContentView: View {
     private func body(for size: CGSize) -> some View {
         let numberOfSelectedCard = viewModel.numberOfSelectedCard
 
-        DispatchQueue.main.async {
+        DispatchQueue.main.async { withAnimation(.easeInOut(duration: 1)) {
             if numberOfSelectedCard == 3 {
                 Thread.sleep(forTimeInterval: 0.2)
-                viewModel.check2()
+                viewModel.check()
+                }
             }
         }
         return VStack {
             Button("New Game") { withAnimation(.easeInOut(duration: 1)) {
                 viewModel.resetGame()}}.transition(.offset())
-            Text("score: \(81 - viewModel.cards.count)")
+            Text("score: \((81 - viewModel.cards.count)/3)")
             Grid(items: viewModel.cardsDeal) { card in
-                CardView(card: card).onTapGesture {
+                CardView(card: card, numberOfCardSelected: numberOfSelectedCard).onTapGesture {
                         card.isSelected ? viewModel.deselect(card: card) : viewModel.select(card: card)
                 }
             }
             .layoutPriority(1)
-            CardView(card: SetGameModel.Card(color: .blue, shading: .solid, numberOfShapes: 3, symbol: .circle, id: 100)).foregroundColor(.red).onTapGesture { withAnimation(.easeInOut) {
+            CardView(card: SetGameModel.Card(color: .blue, shading: .solid, numberOfShapes: 3, symbol: .circle, id: 100), numberOfCardSelected: 1).onTapGesture { withAnimation(.easeInOut) {
                 viewModel.dealCards()
                 }
             }
         }
-        .onAppear { withAnimation(.easeInOut(duration: 2)) {
-            viewModel.resetGame()}
+        .onAppear {
+            viewModel.removeAllCard()
+            withAnimation(.easeInOut(duration: 2)) {viewModel.resetGame()}
         }
     }
 }
 
 struct CardView: View {
     var card: SetGameModel.Card
+    var numberOfCardSelected: Int
     
     var body: some View {
         VStack {
@@ -60,9 +63,9 @@ struct CardView: View {
         }
         .padding()
         .cardify(isFaceUp: card.isDealt, isSelected: card.isSelected)
-        .transition(.offset(x: 1000, y: -1000))
-        .padding()
         .foregroundColor(color)
+        .transition(.offset(x: 0, y: 1000))
+        .padding()
         .aspectRatio(2/3, contentMode: .fit)
     }
     

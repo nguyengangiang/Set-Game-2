@@ -19,6 +19,10 @@ class SetGameVM: ObservableObject {
         model = SetGameVM.newGame(numberOfCardsDealt: 12)
     }
     
+    func removeAllCard() {
+        model.removeAllCard()
+    }
+    
     func select(card: SetGameModel.Card) {
         model.select(card: card)
     }
@@ -31,12 +35,12 @@ class SetGameVM: ObservableObject {
         model.dealCards(amount: 3)
     }
     
-    func removeDealtCard(card: SetGameModel.Card) {
+    func removeCard(card: SetGameModel.Card) {
         model.removeDealtCard(card: card)
     }
     
-    func check2(){
-        model.check2()
+    func check(){
+        model.check()
     }
     
     // MARK: Access to Model

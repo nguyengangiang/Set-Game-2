@@ -68,9 +68,9 @@ struct SetGameModel {
         indicesOfChosenCard.append(index)
     }
     
-    mutating func check2() {
+    mutating func check() {
         if indicesOfChosenCard.count == 3 {
-            if check() {
+            if checkCard() {
                 for i in 0..<3 {
                     cards[indicesOfChosenCard[i]].isMatched = true
                     cards[indicesOfChosenCard[i]].isDealt = false
@@ -90,7 +90,7 @@ struct SetGameModel {
         }
     }
     
-    func check() -> Bool {
+    func checkCard() -> Bool {
         assert(indicesOfChosenCard.count == 3)
         let card1 = cards[indicesOfChosenCard[0]]
         let card2 = cards[indicesOfChosenCard[1]]
@@ -129,5 +129,9 @@ struct SetGameModel {
     
     mutating func removeDealtCard(card: Card) {
         cards[cards.firstIndex(matching: card)!].isDealt = false
+    }
+    
+    mutating func removeAllCard() {
+        cards.removeAll()
     }
 }
