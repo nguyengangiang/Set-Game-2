@@ -16,7 +16,6 @@ class SetGameVM: ObservableObject {
     
     // MARK: Intents
     func resetGame() {
-        model.cards.removeAll()
         model = SetGameVM.newGame(numberOfCardsDealt: 12)
     }
     
@@ -32,6 +31,14 @@ class SetGameVM: ObservableObject {
         model.dealCards(amount: 3)
     }
     
+    func removeDealtCard(card: SetGameModel.Card) {
+        model.removeDealtCard(card: card)
+    }
+    
+    func check2(){
+        model.check2()
+    }
+    
     // MARK: Access to Model
     var cards: Array<SetGameModel.Card> {
         model.cards
@@ -43,5 +50,9 @@ class SetGameVM: ObservableObject {
     
     var cardsDeal: Array<SetGameModel.Card> {
         return model.cards.filter{$0.isDealt}
+    }
+    
+    var numberOfSelectedCard: Int {
+        return model.indicesOfChosenCard.count
     }
 }

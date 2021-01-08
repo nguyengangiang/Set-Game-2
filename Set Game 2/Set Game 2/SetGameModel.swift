@@ -62,15 +62,18 @@ struct SetGameModel {
     }
     
     mutating func select(card: Card) {
-        print("selected card: \(card)")
         assert(card.isDealt && !card.isMatched && !card.isSelected)
         let index = cards.firstIndex(matching: card)!
-        cards[index].isSelected = true
+        cards[index].isSelected = !cards[index].isSelected
         indicesOfChosenCard.append(index)
+    }
+    
+    mutating func check2() {
         if indicesOfChosenCard.count == 3 {
             if check() {
                 for i in 0..<3 {
                     cards[indicesOfChosenCard[i]].isMatched = true
+                    cards[indicesOfChosenCard[i]].isDealt = false
                     }
                 cards.removeAll { cardIndex in
                     cardIndex.isMatched
@@ -79,7 +82,6 @@ struct SetGameModel {
                 dealCards()
             } else {
                 while (!indicesOfChosenCard.isEmpty) {
-                    print("\(indicesOfChosenCard.count)")
                     let cardIndex = indicesOfChosenCard[0]
                     deselect(card: cards[cardIndex])
                 }
@@ -88,7 +90,7 @@ struct SetGameModel {
         }
     }
     
-    private func check() -> Bool {
+    func check() -> Bool {
         assert(indicesOfChosenCard.count == 3)
         let card1 = cards[indicesOfChosenCard[0]]
         let card2 = cards[indicesOfChosenCard[1]]
@@ -119,9 +121,13 @@ struct SetGameModel {
     }
     
     mutating func deselect(card: Card) {
-        assert(card.isDealt && !card.isMatched && card.isSelected && indicesOfChosenCard.count < 4)
+        assert(card.isDealt && !card.isMatched && card.isSelected && indicesOfChosenCard.count <= 3)
         let index = cards.firstIndex(matching: card)!
         cards[index].isSelected = false
         indicesOfChosenCard = indicesOfChosenCard.filter{$0 != index}
+    }
+    
+    mutating func removeDealtCard(card: Card) {
+        cards[cards.firstIndex(matching: card)!].isDealt = false
     }
 }

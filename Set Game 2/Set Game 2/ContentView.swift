@@ -9,24 +9,41 @@ import SwiftUI
 
 struct ContentView: View {
     @ObservedObject var viewModel: SetGameVM
+
     var body: some View {
-        VStack {
-            Button("New Game") { withAnimation(.easeInOut) {
+        GeometryReader { geometry in
+            body(for: geometry.size)
+
+        }
+    }
+    
+    private func body(for size: CGSize) -> some View {
+        let numberOfSelectedCard = viewModel.numberOfSelectedCard
+
+        DispatchQueue.main.async {
+            if numberOfSelectedCard == 3 {
+                Thread.sleep(forTimeInterval: 0.2)
+                viewModel.check2()
+            }
+        }
+        return VStack {
+            Button("New Game") { withAnimation(.easeInOut(duration: 1)) {
                 viewModel.resetGame()}}.transition(.offset())
+            Text("score: \(81 - viewModel.cards.count)")
             Grid(items: viewModel.cardsDeal) { card in
-                CardView(card: card).onTapGesture{ withAnimation(.easeInOut) {card.isSelected ? viewModel.deselect(card: card) : viewModel.select(card: card)}}
-                    .transition(.slide)
+                CardView(card: card).onTapGesture {
+                        card.isSelected ? viewModel.deselect(card: card) : viewModel.select(card: card)
+                }
             }
             .layoutPriority(1)
             CardView(card: SetGameModel.Card(color: .blue, shading: .solid, numberOfShapes: 3, symbol: .circle, id: 100)).foregroundColor(.red).onTapGesture { withAnimation(.easeInOut) {
                 viewModel.dealCards()
                 }
             }
-            .transition(.offset(x: 100, y: -100))
         }
-        .onAppear { withAnimation(.linear(duration: 1)) {
+        .onAppear { withAnimation(.easeInOut(duration: 2)) {
             viewModel.resetGame()}
-        }.transition(.offset(x: CGFloat(Int.random(in: 10...150)), y: CGFloat(Int.random(in: 10...150))))
+        }
     }
 }
 
@@ -43,10 +60,10 @@ struct CardView: View {
         }
         .padding()
         .cardify(isFaceUp: card.isDealt, isSelected: card.isSelected)
-        .padding(5)
+        .transition(.offset(x: 1000, y: -1000))
+        .padding()
         .foregroundColor(color)
         .aspectRatio(2/3, contentMode: .fit)
-
     }
     
     func body(for size: CGSize) -> some View {
