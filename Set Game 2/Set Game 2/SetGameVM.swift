@@ -39,8 +39,12 @@ class SetGameVM: ObservableObject {
         model.removeDealtCard(card: card)
     }
     
-    func check(){
+    func check() -> Bool{
         model.check()
+    }
+    
+    func removeMatch() {
+        //model.removeMatch()
     }
     
     // MARK: Access to Model

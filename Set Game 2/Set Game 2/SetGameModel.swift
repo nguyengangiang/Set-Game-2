@@ -68,18 +68,15 @@ struct SetGameModel {
         indicesOfChosenCard.append(index)
     }
     
-    mutating func check() {
+    mutating func check() -> Bool {
         if indicesOfChosenCard.count == 3 {
             if checkCard() {
                 for i in 0..<3 {
                     cards[indicesOfChosenCard[i]].isMatched = true
-                    cards[indicesOfChosenCard[i]].isDealt = false
-                    }
-                cards.removeAll { cardIndex in
-                    cardIndex.isMatched
                 }
-                indicesOfChosenCard.removeAll()
-                dealCards()
+                print("isMatched = true")
+                //removeMatch()
+                return true
             } else {
                 while (!indicesOfChosenCard.isEmpty) {
                     let cardIndex = indicesOfChosenCard[0]
@@ -88,6 +85,16 @@ struct SetGameModel {
                 indicesOfChosenCard.removeAll()
             }
         }
+        return false
+    }
+    
+    mutating func removeMatch() {
+        
+        cards.removeAll { cardIndex in
+            cardIndex.isMatched
+        }
+        indicesOfChosenCard.removeAll()
+        dealCards()
     }
     
     func checkCard() -> Bool {

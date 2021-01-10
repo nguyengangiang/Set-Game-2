@@ -23,13 +23,15 @@ struct ContentView: View {
         DispatchQueue.main.async { withAnimation(.easeInOut(duration: 1)) {
             if numberOfSelectedCard == 3 {
                 Thread.sleep(forTimeInterval: 0.2)
-                viewModel.check()
+                if viewModel.check() {
+                    viewModel.removeMatch()}
                 }
             }
         }
+
         return VStack {
             Button("New Game") { withAnimation(.easeInOut(duration: 1)) {
-                viewModel.resetGame()}}.transition(.offset())
+                viewModel.resetGame()}}
             Text("score: \((81 - viewModel.cards.count)/3)")
             Grid(items: viewModel.cardsDeal) { card in
                 CardView(card: card, numberOfCardSelected: numberOfSelectedCard).onTapGesture {
@@ -40,8 +42,10 @@ struct ContentView: View {
             CardView(card: SetGameModel.Card(color: .blue, shading: .solid, numberOfShapes: 3, symbol: .circle, id: 100), numberOfCardSelected: 1).onTapGesture { withAnimation(.easeInOut) {
                 viewModel.dealCards()
                 }
-            }
+            }.opacity(viewModel.cards.count - viewModel.cardsDeal.count == 0 ? 0.1 : 1)
+            .scaleEffect(2)
         }
+        .font(.largeTitle)
         .onAppear {
             viewModel.removeAllCard()
             withAnimation(.easeInOut(duration: 2)) {viewModel.resetGame()}
@@ -62,9 +66,9 @@ struct CardView: View {
             }
         }
         .padding()
-        .cardify(isFaceUp: card.isDealt, isSelected: card.isSelected)
+        .cardify(isFaceUp: card.isDealt, isSelected: card.isSelected, isMatched: card.isMatched, numberOfSelectedCard: numberOfCardSelected)
         .foregroundColor(color)
-        .transition(.offset(x: 0, y: 1000))
+        .transition(.moveAndFlip)
         .padding()
         .aspectRatio(2/3, contentMode: .fit)
     }
@@ -73,13 +77,13 @@ struct CardView: View {
         ZStack {
             Group {
                 if card.symbol.rawValue == 1 {
-                    Diamond().stroke(lineWidth: 2)
+                    Diamond().stroke(lineWidth: 4)
                     Diamond().fill().opacity(shading)
                 } else if card.symbol.rawValue == 2 {
-                    Capsule().stroke(lineWidth: 2)
+                    Capsule().stroke(lineWidth: 4)
                     Capsule().fill().opacity(shading)
                 } else {
-                    Rectangle().stroke(lineWidth: 2)
+                    Rectangle().stroke(lineWidth: 4)
                     Rectangle().fill().opacity(shading)
                 }
             }
@@ -103,7 +107,7 @@ struct CardView: View {
         switch card.shading {
         case .open: return 0
         case .solid: return 1
-        case.striped: return 0.5
+        case.striped: return 0.4
         }
     }
 }

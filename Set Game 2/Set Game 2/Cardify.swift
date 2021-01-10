@@ -15,15 +15,19 @@ struct Cardify: AnimatableModifier {
     }
     
     var isSelected: Bool
+    var isMatched: Bool = false
+    var numberOfSelectedCard: Int
     
     var animatableData: Double {
         get {return rotation}
         set {rotation = newValue}
     }
     
-    init(isFaceUp: Bool, isSelected: Bool) {
+    init(isFaceUp: Bool, isSelected: Bool, isMatched: Bool, numberOfSelectedCard: Int) {
         rotation = isFaceUp ? 0 : 180
         self.isSelected = isSelected
+        self.isMatched = isMatched
+        self.numberOfSelectedCard = numberOfSelectedCard
     }
     
     func body(content: Content) -> some View {
@@ -31,7 +35,8 @@ struct Cardify: AnimatableModifier {
             Group{
                 RoundedRectangle(cornerRadius: cornerRadius).stroke(lineWidth: lineWidth)
                 RoundedRectangle(cornerRadius: cornerRadius).fill(Color.white)
-                RoundedRectangle(cornerRadius: cornerRadius).foregroundColor(Color.purple).opacity(isSelected ? 0.2 : 0)
+                RoundedRectangle(cornerRadius: cornerRadius).foregroundColor(Color.purple).opacity(isSelected && numberOfSelectedCard < 3 ? 0.2 : 0)
+                RoundedRectangle(cornerRadius: cornerRadius).foregroundColor(isMatched ? .green : .red).opacity(isSelected && numberOfSelectedCard == 3 ? 0.5 : 0.0)
                 content
             }.opacity(isFaceUp ? 1 : 0)
             RoundedRectangle(cornerRadius: cornerRadius).opacity(isFaceUp ? 0 : 1)
@@ -43,7 +48,7 @@ struct Cardify: AnimatableModifier {
 }
 
 extension View {
-    func cardify(isFaceUp: Bool, isSelected: Bool) -> some View {
-        modifier(Cardify(isFaceUp: isFaceUp, isSelected: isSelected))
+    func cardify(isFaceUp: Bool, isSelected: Bool, isMatched: Bool, numberOfSelectedCard: Int) -> some View {
+        modifier(Cardify(isFaceUp: isFaceUp, isSelected: isSelected, isMatched: isMatched, numberOfSelectedCard: numberOfSelectedCard))
     }
 }
