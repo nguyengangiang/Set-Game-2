@@ -1,5 +1,5 @@
 //
-//  ContentView.swift
+//  SetGameView.swift
 //  Set Game 2
 //
 //  Created by Giang Nguyenn on 12/31/20.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct SetGameView: View {
     @ObservedObject var viewModel: SetGameVM
 
     var body: some View {
@@ -20,11 +20,12 @@ struct ContentView: View {
     private func body(for size: CGSize) -> some View {
         let numberOfSelectedCard = viewModel.numberOfSelectedCard
 
-        DispatchQueue.main.async { withAnimation(.easeInOut(duration: 1)) {
+        DispatchQueue.main.async {
             if numberOfSelectedCard == 3 {
-                Thread.sleep(forTimeInterval: 0.2)
-                if viewModel.check() {
+                if viewModel.check() { withAnimation(.easeInOut(duration: 1)) {
                     viewModel.removeMatch()}
+                } else { withAnimation(.easeInOut(duration: 1)) {
+                    viewModel.deselectMatch()}
                 }
             }
         }
@@ -43,7 +44,8 @@ struct ContentView: View {
                 viewModel.dealCards()
                 }
             }.opacity(viewModel.cards.count - viewModel.cardsDeal.count == 0 ? 0.1 : 1)
-            .scaleEffect(2)
+            .scaleEffect(1.5)
+            .padding()
         }
         .font(.largeTitle)
         .onAppear {
@@ -66,10 +68,10 @@ struct CardView: View {
             }
         }
         .padding()
-        .cardify(isFaceUp: card.isDealt, isSelected: card.isSelected, isMatched: card.isMatched, numberOfSelectedCard: numberOfCardSelected)
+        .cardify(isFaceUp: card.isDealt, isSelected: card.isSelected, isMatched: card.isMatched, numberOfSelectedCard: numberOfCardSelected/*, isChecked: card.isChecked*/)
         .foregroundColor(color)
         .transition(.moveAndFlip)
-        .padding()
+        .padding(5)
         .aspectRatio(2/3, contentMode: .fit)
     }
     
@@ -114,6 +116,6 @@ struct CardView: View {
 
 struct ContentView_Preview: PreviewProvider {
     static var previews: some View {
-        ContentView(viewModel: SetGameVM())
+        SetGameView(viewModel: SetGameVM())
     }
 }

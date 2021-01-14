@@ -40,13 +40,23 @@ class SetGameVM: ObservableObject {
     }
     
     func check() -> Bool{
-        model.check()
+        //objectWillChange.send()
+        return model.check()
+    }
+    
+    func checkCard() -> Bool {
+        model.checkCard()
     }
     
     func removeMatch() {
-        //model.removeMatch()
+        model.removeMatch()
+        //objectWillChange.send()
     }
     
+    func deselectMatch() {
+        model.deselectMatch()
+    }
+
     // MARK: Access to Model
     var cards: Array<SetGameModel.Card> {
         model.cards
