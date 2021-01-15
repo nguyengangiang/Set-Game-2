@@ -25,7 +25,7 @@ struct SetGameModel {
                 }
             }
         }
-        //cards.shuffle()
+        cards.shuffle()
         for i in 0 ..< numberOfCardsDealed {
             cards[i].isDealt = true
         }
@@ -41,7 +41,6 @@ struct SetGameModel {
         var isMatched: Bool = false
         var isSelected: Bool = false
         var isDealt: Bool = false
-        //var isChecked: Bool = false
     }
     
     enum Color: Int, CaseIterable {
@@ -74,8 +73,6 @@ struct SetGameModel {
             if checkCard() {
                 for i in 0..<3 {
                     cards[indicesOfChosenCard[i]].isMatched = true
-                    //cards[indicesOfChosenCard[i]].isChecked = true
-                    print("\(cards[indicesOfChosenCard[i]])")
                 }
                 return true
             } 
@@ -86,8 +83,6 @@ struct SetGameModel {
     mutating func deselectMatch() {
         while (!indicesOfChosenCard.isEmpty) {
             let cardIndex = indicesOfChosenCard[0]
-            //cards[cardIndex].isChecked = true
-            print("\(cards[cardIndex])")
             deselect(card: cards[cardIndex])
         }
         indicesOfChosenCard.removeAll()

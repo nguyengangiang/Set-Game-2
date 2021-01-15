@@ -9,10 +9,10 @@
 /* Begin PBXBuildFile section */
 		C1292B0825A134010018DB26 /* Diamond.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1292B0725A134010018DB26 /* Diamond.swift */; };
 		C15400A2259EB7C600FB04F4 /* Set_Game_2App.swift in Sources */ = {isa = PBXBuildFile; fileRef = C15400A1259EB7C600FB04F4 /* Set_Game_2App.swift */; };
-		C15400A4259EB7C600FB04F4 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C15400A3259EB7C600FB04F4 /* ContentView.swift */; };
+		C15400A4259EB7C600FB04F4 /* SetGameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C15400A3259EB7C600FB04F4 /* SetGameView.swift */; };
 		C15400A6259EB7C700FB04F4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C15400A5259EB7C700FB04F4 /* Assets.xcassets */; };
 		C15400A9259EB7C700FB04F4 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C15400A8259EB7C700FB04F4 /* Preview Assets.xcassets */; };
-		C18C701225A9233800D108A3 /* moveAndFlip.swift in Sources */ = {isa = PBXBuildFile; fileRef = C18C701125A9233800D108A3 /* moveAndFlip.swift */; };
+		C18C701225A9233800D108A3 /* moveAndFade.swift in Sources */ = {isa = PBXBuildFile; fileRef = C18C701125A9233800D108A3 /* moveAndFade.swift */; };
 		C1D7C3DF259FAD2A00EC66D6 /* SetGameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1D7C3DE259FAD2A00EC66D6 /* SetGameModel.swift */; };
 		C1D7C3E2259FB57300EC66D6 /* SetGameVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1D7C3E1259FB57300EC66D6 /* SetGameVM.swift */; };
 		C1D7C3E8259FC2F200EC66D6 /* Cardify.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1D7C3E7259FC2F200EC66D6 /* Cardify.swift */; };
@@ -25,11 +25,11 @@
 		C1292B0725A134010018DB26 /* Diamond.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Diamond.swift; sourceTree = "<group>"; };
 		C154009E259EB7C600FB04F4 /* Set Game 2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Set Game 2.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C15400A1259EB7C600FB04F4 /* Set_Game_2App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Set_Game_2App.swift; sourceTree = "<group>"; };
-		C15400A3259EB7C600FB04F4 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		C15400A3259EB7C600FB04F4 /* SetGameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetGameView.swift; sourceTree = "<group>"; };
 		C15400A5259EB7C700FB04F4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C15400A8259EB7C700FB04F4 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		C15400AA259EB7C700FB04F4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		C18C701125A9233800D108A3 /* moveAndFlip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = moveAndFlip.swift; sourceTree = "<group>"; };
+		C18C701125A9233800D108A3 /* moveAndFade.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = moveAndFade.swift; sourceTree = "<group>"; };
 		C1D7C3DE259FAD2A00EC66D6 /* SetGameModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetGameModel.swift; sourceTree = "<group>"; };
 		C1D7C3E1259FB57300EC66D6 /* SetGameVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetGameVM.swift; sourceTree = "<group>"; };
 		C1D7C3E7259FC2F200EC66D6 /* Cardify.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cardify.swift; sourceTree = "<group>"; };
@@ -69,11 +69,11 @@
 			isa = PBXGroup;
 			children = (
 				C15400A1259EB7C600FB04F4 /* Set_Game_2App.swift */,
-				C15400A3259EB7C600FB04F4 /* ContentView.swift */,
+				C15400A3259EB7C600FB04F4 /* SetGameView.swift */,
 				C1D7C3EB259FC40600EC66D6 /* Grid.swift */,
 				C1D7C3EA259FC40600EC66D6 /* GridLayout.swift */,
 				C1D7C3E7259FC2F200EC66D6 /* Cardify.swift */,
-				C18C701125A9233800D108A3 /* moveAndFlip.swift */,
+				C18C701125A9233800D108A3 /* moveAndFade.swift */,
 				C1D7C3DE259FAD2A00EC66D6 /* SetGameModel.swift */,
 				C1292B0725A134010018DB26 /* Diamond.swift */,
 				C1D7C3F0259FE38500EC66D6 /* Array+Identifiable.swift */,
@@ -163,11 +163,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				C1D7C3E8259FC2F200EC66D6 /* Cardify.swift in Sources */,
-				C15400A4259EB7C600FB04F4 /* ContentView.swift in Sources */,
+				C15400A4259EB7C600FB04F4 /* SetGameView.swift in Sources */,
 				C15400A2259EB7C600FB04F4 /* Set_Game_2App.swift in Sources */,
 				C1D7C3ED259FC40600EC66D6 /* Grid.swift in Sources */,
 				C1D7C3DF259FAD2A00EC66D6 /* SetGameModel.swift in Sources */,
-				C18C701225A9233800D108A3 /* moveAndFlip.swift in Sources */,
+				C18C701225A9233800D108A3 /* moveAndFade.swift in Sources */,
 				C1D7C3F1259FE38500EC66D6 /* Array+Identifiable.swift in Sources */,
 				C1292B0825A134010018DB26 /* Diamond.swift in Sources */,
 				C1D7C3E2259FB57300EC66D6 /* SetGameVM.swift in Sources */,

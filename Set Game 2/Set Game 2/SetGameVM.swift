@@ -40,7 +40,6 @@ class SetGameVM: ObservableObject {
     }
     
     func check() -> Bool{
-        //objectWillChange.send()
         return model.check()
     }
     
@@ -50,7 +49,6 @@ class SetGameVM: ObservableObject {
     
     func removeMatch() {
         model.removeMatch()
-        //objectWillChange.send()
     }
     
     func deselectMatch() {

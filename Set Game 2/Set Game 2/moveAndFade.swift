@@ -10,7 +10,7 @@ import SwiftUI
 
 
 extension AnyTransition {
-    static var moveAndFlip: AnyTransition {
+    static var moveAndFade: AnyTransition {
         let insertion = AnyTransition.move(edge: .bottom)
             .combined(with: .opacity)
         let removal = AnyTransition.move(edge: .bottom)
